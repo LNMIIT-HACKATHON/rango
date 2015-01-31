@@ -3,7 +3,6 @@ package contagious.rango;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,21 +23,20 @@ public class MainActivity extends ActionBarActivity {
     };
 
     public static final String[][] SENTENCES = {
-            {"Who am I?", "Who i am?"},
-            {"What are you doing?", "What doing are you?"},
-            {"I can drink water.", "I water can drink."},
-            {"Charlie is a girl.", "Charlie girl a is."}
+        {"Who am I?", "Who i am?"},
+        {"What are you doing?", "What doing are you?"},
+        {"I can drink water.", "I water can drink."},
+        {"Charlie is a girl.", "Charlie girl a is."}
     };
 
     private int player1Score, player2Score;
     private boolean isCorrect;
-    private int a=0;
-    private boolean answered=false;
+
+    private int count = 0;
 
     private Handler handler;
-    private Timer timer;
-    private TimerTask timerTask;
     private Runnable runnable;
+
     private Button p2b2, p1b1, p1b2, p2b1;
     private TextView p2text, p1text, p2t2, p2t1, p1t1, p1t2;
 
@@ -61,30 +59,24 @@ public class MainActivity extends ActionBarActivity {
         player2Score = 0;
         player1Score = 0;
 
-
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                if(!answered)
+                handler.postDelayed(this, 5000);
+                count++;
+                p1text.setText(Integer.toString(count));
                 refreshGame();
-                else
-                    answered = false;
-
-                handler.postDelayed(this,5000);
             }
         };
-        handler.postDelayed(runnable,5000);
-        //timer = new Timer();
-        //timer.scheduleAtFixedRate(timerTask, 0, 5000);
+        handler.postDelayed(runnable, 5000);
+        refreshGame();
     }
 
     private void refreshGame() {
-        Log.d("Refresh","Refreshing");
         Random random = new Random();
         switch (random.nextInt(2)){
             case 0:
-
                 break;
             case 1:
                 break;
@@ -99,10 +91,6 @@ public class MainActivity extends ActionBarActivity {
                     isCorrect = false;
                 break;
         }
-        a++;
-        p1t1.setText(""+a);
-
-//        Toast.makeText(getApplicationContext(), "refreshing", Toast.LENGTH_SHORT).show();
     }
 
     public void onClick(View view) {
@@ -135,12 +123,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
         }
 
-        // timer reset
-        //timer.cancel();
-        //timer = new Timer(); // try deleting this
-        //timer.scheduleAtFixedRate(timerTask, 0, 5000);
-        answered = true;
-        handler.postDelayed(runnable,5000);
+        count++;
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, 0);
     }
 
 }
