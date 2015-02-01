@@ -32,8 +32,37 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
+        <TextView
+            android:id="@+id/p1s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:text="0"
+            android:textSize="30sp"
+            tools:ignore="RtlSymmetry" />
+
+        <contagious.rango.RotatedTextView
+            android:id="@+id/p2s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="30sp"
+            android:text="0"
+            tools:ignore="RtlSymmetry" />
+
         <!-- first set -->
         <LinearLayout
+            android:id="@+id/gameLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -57,6 +86,7 @@
 
         <!-- second set -->
         <LinearLayout
+            android:id="@+id/gameLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
