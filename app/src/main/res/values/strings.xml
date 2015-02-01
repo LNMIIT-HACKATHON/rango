@@ -5,8 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <color name="black">#000000</color>
+    <color name="white">#fff</color>
 
     <string name="title_activity_finale">FinaleActivity</string>
+    <string name="title_activity_splash">Splash</string>
 
 </resources>

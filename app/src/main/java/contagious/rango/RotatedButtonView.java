@@ -3,9 +3,9 @@ package contagious.rango;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.widget.Button;
+import android.widget.ImageButton;
 
-public class RotatedButtonView extends Button {
+public class RotatedButtonView extends ImageButton {
     public RotatedButtonView(Context context) {
         super(context);
     }

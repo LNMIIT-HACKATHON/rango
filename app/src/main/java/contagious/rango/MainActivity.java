@@ -1,19 +1,20 @@
 package contagious.rango;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Random;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     public static final String[][] WORDS_EASY = {
         {"apple", "appel"}, {"bear", "baer"}, {"carrot", "carot"}, {"dust", "duust"},
@@ -67,10 +68,10 @@ public class MainActivity extends ActionBarActivity {
     };
 
     public static final String[][] COLORS = {
-        {"Black", "#333333"},   {"Blue", "#2196F3"},
+        {"Blue", "#2196F3"},
         {"Green", "#1DE986"},   {"Grey", "#454545"},
         {"Orange", "#FF9800"},  {"Pink", "#E91E63"},
-        {"Purple,", "#9C27B0"}, {"Red", "#F44336"},
+        {"Purple", "#9C27B0"},  {"Red", "#F44336"},
         {"White", "#FFFFFF"},   {"Yellow", "#FFEB3B"},
     };
 
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String PLAYER2_SCORE = "PLAYER2_SCORE";
 
     public static final int MAX_SCORE = 15;
-    public static final int MAX_GAMES = 25;
+    public static final int MAX_GAMES = 20;
 
     private int player1Score = 0, player2Score = 0, lastGame = 2, game_count = 0;
     private boolean isCorrect;
@@ -87,9 +88,10 @@ public class MainActivity extends ActionBarActivity {
     private Handler handler;
     private Runnable runnable;
 
-    private Button p2b2, p1b1, p1b2, p2b1;
+    private ImageButton p2b2, p1b1, p1b2, p2b1;
     private TextView p2text, p1text, p2t2, p2t1, p1t1, p1t2, p1s, p2s;
     private LinearLayout gameLayout2, gameLayout1;
+    Typeface type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +100,8 @@ public class MainActivity extends ActionBarActivity {
 
         context = this;
 
-        p2b2 = (Button) findViewById(R.id.p2b2);
-        p2b1 = (Button) findViewById(R.id.p2b1);
+        p2b2 = (ImageButton) findViewById(R.id.p2b2);
+        p2b1 = (ImageButton) findViewById(R.id.p2b1);
         p2text = (TextView) findViewById(R.id.p2text);
         p1text = (TextView) findViewById(R.id.p1text);
         p2t2 = (TextView) findViewById(R.id.p2t2);
@@ -108,10 +110,20 @@ public class MainActivity extends ActionBarActivity {
         p1t2 = (TextView) findViewById(R.id.p1t2);
         p1s = (TextView) findViewById(R.id.p1s);
         p2s = (TextView) findViewById(R.id.p2s);
-        p1b1 = (Button) findViewById(R.id.p1b1);
-        p1b2 = (Button) findViewById(R.id.p1b2);
+        p1b1 = (ImageButton) findViewById(R.id.p1b1);
+        p1b2 = (ImageButton) findViewById(R.id.p1b2);
         gameLayout1 = (LinearLayout) findViewById(R.id.gameLayout1);
         gameLayout2 = (LinearLayout) findViewById(R.id.gameLayout2);
+        type = Typeface.createFromAsset(getAssets(), "Raleway-Regular.ttf");
+
+        p1t1.setTypeface(type);
+        p1t2.setTypeface(type);
+        p2t1.setTypeface(type);
+        p2t2.setTypeface(type);
+        p1text.setTypeface(type);
+        p2text.setTypeface(type);
+        p1s.setTypeface(type);
+        p2s.setTypeface(type);
 
         player2Score = 0;
         player1Score = 0;
@@ -134,6 +146,7 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(context, FinaleActivity.class);
             intent.putExtra(PLAYER1_SCORE, player1Score);
             intent.putExtra(PLAYER2_SCORE, player2Score);
+            handler.removeCallbacks(runnable);
             context.startActivity(intent);
         }
 
@@ -156,6 +169,12 @@ public class MainActivity extends ActionBarActivity {
                     color2 = COLORS[random.nextInt(COLORS.length)];
                 } while (color1[0].equals(color2[0]));
 
+
+                p1b1.setImageResource(R.drawable.grey);
+                p1b2.setImageResource(R.drawable.grey);
+                p2b1.setImageResource(R.drawable.grey);
+                p2b2.setImageResource(R.drawable.grey);
+
                 p1t1.setText(color1[0]);
                 p1t2.setText(color1[0]);
                 p2t1.setText(color1[0]);
@@ -174,10 +193,15 @@ public class MainActivity extends ActionBarActivity {
             case 1:
                 // word spelling
 
-                p1t1.setTextColor(getResources().getColor(R.color.black));
-                p1t2.setTextColor(getResources().getColor(R.color.black));
-                p2t1.setTextColor(getResources().getColor(R.color.black));
-                p2t2.setTextColor(getResources().getColor(R.color.black));
+                p1b1.setImageResource(R.drawable.grey);
+                p1b2.setImageResource(R.drawable.grey);
+                p2b1.setImageResource(R.drawable.grey);
+                p2b2.setImageResource(R.drawable.grey);
+
+                p1t1.setTextColor(getResources().getColor(R.color.white));
+                p1t2.setTextColor(getResources().getColor(R.color.white));
+                p2t1.setTextColor(getResources().getColor(R.color.white));
+                p2t2.setTextColor(getResources().getColor(R.color.white));
 
                 String[] word;
                 if (player1Score < 5 || player2Score < 5)
@@ -187,8 +211,6 @@ public class MainActivity extends ActionBarActivity {
                 else
                     word = WORDS_HARD[random.nextInt(WORDS_EASY.length)];
 
-                // TODO: Use random boolean to jumble the 2 words
-                // TODO: Save game id and answer globally
                 isCorrect = random.nextBoolean();
 
                 p1t1.setText(isCorrect ? word[0] : word[1]);
@@ -204,9 +226,16 @@ public class MainActivity extends ActionBarActivity {
                 gameLayout1.setVisibility(View.VISIBLE);
                 gameLayout2.setVisibility(View.GONE);
 
+                p1b1.setImageResource(R.drawable.green_new);
+                p1b2.setImageResource(R.drawable.red_new);
+                p2b1.setImageResource(R.drawable.green_new);
+                p2b2.setImageResource(R.drawable.red_new);
+
                 int sentence_index1 = random.nextInt(SENTENCES.length);
                 int sentence_index2 = random.nextInt(SENTENCES[0].length);
 
+                p1text.setTextColor(getResources().getColor(R.color.white));
+                p2text.setTextColor(getResources().getColor(R.color.white));
                 p1text.setText(SENTENCES[sentence_index1][sentence_index2]);
                 p2text.setText(SENTENCES[sentence_index1][sentence_index2]);
                 isCorrect = sentence_index2 == 0;
@@ -254,6 +283,7 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(context, FinaleActivity.class);
             intent.putExtra(PLAYER1_SCORE, player1Score);
             intent.putExtra(PLAYER2_SCORE, player2Score);
+            handler.removeCallbacks(runnable);
             context.startActivity(intent);
         }
 

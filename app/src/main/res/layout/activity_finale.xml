@@ -3,30 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#333"
     tools:context="contagious.rango.FinaleActivity">
 
     <contagious.rango.RotatedTextView
         android:id="@+id/p2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:text="You Win!"/>
 
-    <contagious.rango.RotatedTextView
-        android:id="@+id/p2draw"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0do"
-        android:layout_weight="1"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/p1draw"
-        android:layout_width="match_parent"
-        android:layout_height="0do"
-        android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:onClick="restart"
+            android:src="@drawable/restart"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:onClick="exit"
+            android:src="@drawable/exit"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/p1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:text="You Lose!"/>
 
 </LinearLayout>
